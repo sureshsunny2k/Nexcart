@@ -377,7 +377,7 @@
   <div class="hero-text">
     <div class="hero-badge">✨ Best Deals Online</div>
     <h1>Shop Smart,<br><span>Save More!</span></h1>
-    <p>Nexcart brings you the best deals on fashion, home, electronics & more — delivered right to your doorstep.Trendy finds, affordable fashion & daily essentials ✨ </p>
+    <p>Nexcart brings you the best deals on fashion, home, electronics & more — delivered right to your doorstep.</p>
     <div class="hero-actions">
       <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now 🛍️</button>
       <button class="btn-outline" onclick="document.getElementById('offers').scrollIntoView({behavior:'smooth'})">View Offers →</button>
@@ -419,7 +419,6 @@
     <button class="cat-chip" onclick="filterCat('electronics',this)">📱 Electronics</button>
     <button class="cat-chip" onclick="filterCat('beauty',this)">💄 Beauty</button>
     <button class="cat-chip" onclick="filterCat('kids',this)">🧸 Kids</button>
-   <button class="cat-chip" onclick="filterCat('Kunna',this)">👌 Adult</button>
   </div>
 
   <div class="products-grid" id="products-grid"></div>
@@ -632,7 +631,7 @@
   <div class="footer-grid">
     <div>
       <div class="footer-logo">Nex<span>cart</span></div>
-      <p class="footer-desc">Trendy finds, affordable fashion & daily essentials ✨</p>
+      <p class="footer-desc">Your trusted online store in Kozhikode. Shop the best deals on fashion, home, electronics and more.</p>
     </div>
     <div>
       <div class="footer-heading">Quick Links</div>
@@ -891,6 +890,20 @@ function processPayment() {
     `${fname} ${lname} · ${phone}<br>${addr}, ${city} – ${pin}, ${state}`;
   document.getElementById('s3-payment').textContent = 'Payment via: '+payLabels[payMode];
   document.getElementById('s3-total').textContent = '₹'+cartTotal();
+  
+fetch("https://script.google.com/macros/s/AKfycbw8cHMgbD3YgFF2O4DPk7xvc9AqlaDRmvGIe9glm8dIqs4JIibsevphkJZ6G9KAvmc/exec", {
+  method: "POST",
+  body: JSON.stringify({
+    name: fname + " " + lname,
+    phone: phone,
+    address: addr + ", " + city + " - " + pin,
+    product: cart.map(c => c.name).join(", "),
+    total: cartTotal(),
+    payment: payLabels[payMode]
+  })
+});
+
+cart = [];
 
   // Clear cart, move to step 3
   cart = [];
